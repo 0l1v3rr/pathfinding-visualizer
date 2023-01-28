@@ -17,10 +17,10 @@ const Header: FC<HeaderProps> = ({
   return (
     <header
       className="px-4 sm:px-10 py-3 flex items-center border-b border-slate-300/10 
-        gap-8 justify-center md:justify-start"
+        gap-8 justify-center md:justify-start shadow-sm backdrop-blur-md"
     >
-      <h1 className="hidden md:block text-slate-200 font-semibold text-2xl">
-        pathfinding
+      <h1 className="hidden md:block text-slate-200 font-semibold text-xl font-arial">
+        Pathfinding
       </h1>
 
       <Select

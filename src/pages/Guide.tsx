@@ -6,7 +6,7 @@ const Guide = () => {
     <div
       className="flex items-center justify-center mx-10 my-5 
         select-none text-lg text-slate-200 gap-x-16 gap-y-4 border border-slate-300/10 px-8 
-        py-2 rounded-lg bg-slate-800/10 shadow-sm flex-wrap"
+        py-2 rounded-lg bg-slate-900/50 shadow-md flex-wrap"
     >
       <div className="flex items-center leading-none gap-1">
         <GoChevronRight className="text-3xl" />
