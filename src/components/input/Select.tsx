@@ -30,7 +30,7 @@ const Select: FC<SelectInputProps> = ({
       onClick={() => setIsOpen(true)}
       onBlur={() => setIsOpen(false)}
       className={twMerge(
-        `relative bg-slate-800 rounded-xl border px-3 py-2
+        `relative bg-slate-800 rounded-xl border px-3 py-1
           border-slate-700 leading-none flex items-center justify-center 
           gap-2 text-slate-400 font-semibold text-sm transition-all 
           duration-150 hover:border-slate-500 hover:bg-slate-700/75
