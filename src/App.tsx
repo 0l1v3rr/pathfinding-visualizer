@@ -29,7 +29,7 @@ const App = () => {
 
       <Guide />
 
-      <NodeContainer nodes={nodes} />
+      <NodeContainer nodes={nodes} updateNode={updateNode} />
     </Main>
   );
 };

@@ -30,7 +30,7 @@ const Header: FC<HeaderProps> = ({
         className="md:ml-auto"
       />
 
-      <HeaderButton label="Clear Board" onClick={() => {}} />
+      <HeaderButton label="Reset Board" onClick={() => {}} />
       <HeaderButton
         label="Clear Walls"
         onClick={() => {}}
