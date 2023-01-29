@@ -59,7 +59,7 @@ const NodeItem: FC<NodeItemProps> = ({ node, updateNode }) => {
       e.dataTransfer.effectAllowed = "move";
       e.dataTransfer.setData("application/json", JSON.stringify(node));
 
-      setInterval(() => setIsDragged(true), 0);
+      setTimeout(() => setIsDragged(true), 0);
     },
     [node]
   );

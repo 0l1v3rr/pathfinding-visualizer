@@ -33,7 +33,7 @@ const Select: FC<SelectInputProps> = ({
         `relative bg-slate-800 rounded-xl border px-3 py-1
           border-slate-700 leading-none flex items-center justify-center 
           gap-2 text-slate-400 font-semibold text-sm transition-all 
-          duration-150 hover:border-slate-500 hover:bg-slate-700/75
+          duration-150 hover:border-slate-500 hover:bg-slate-700/75 z-10
           focus:border-slate-500 focus:bg-slate-700/75 outline-none whitespace-nowrap`,
         className
       )}
