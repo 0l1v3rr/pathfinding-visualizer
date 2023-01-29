@@ -19,7 +19,7 @@ const Guide = () => {
       </div>
 
       <div className="flex items-center leading-none gap-2">
-        <div className="w-6 h-6 border bg-slate-800 border-white/20" />
+        <div className="w-6 h-6 border bg-slate-900/50 border-slate-300/20" />
         <span className="text-slate-300">Unvisited</span>
       </div>
 
@@ -34,7 +34,7 @@ const Guide = () => {
       </div>
 
       <div className="flex items-center leading-none gap-2">
-        <div className="w-6 h-6 border bg-red-900/50 border-red-900/70" />
+        <div className="w-6 h-6 border bg-black/60 border-black" />
         <span className="text-slate-300">Wall</span>
       </div>
     </div>
