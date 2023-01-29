@@ -11,7 +11,7 @@ interface NodeItemProps {
 
 const NodeItem: FC<NodeItemProps> = ({ node, updateNode }) => {
   const [isDragged, setIsDragged] = useState<boolean>(false);
-  const isRegularNode = useMemo(() => {
+  const isNotRegularNode = useMemo(() => {
     return (
       node.isShortestPath ||
       node.isStartNode ||
@@ -38,14 +38,14 @@ const NodeItem: FC<NodeItemProps> = ({ node, updateNode }) => {
         return;
       }
 
-      if (isRegularNode) return;
+      if (isNotRegularNode) return;
 
       if (e.shiftKey && !node.isWall) {
         updateWallStatus(true);
         return;
       }
     },
-    [node, isRegularNode, updateWallStatus]
+    [node, isNotRegularNode, updateWallStatus]
   );
 
   const handleDragStart = useCallback(
@@ -55,10 +55,11 @@ const NodeItem: FC<NodeItemProps> = ({ node, updateNode }) => {
         return;
       }
 
-      setIsDragged(true);
       e.dataTransfer.dropEffect = "move";
       e.dataTransfer.effectAllowed = "move";
       e.dataTransfer.setData("application/json", JSON.stringify(node));
+
+      setInterval(() => setIsDragged(true), 0);
     },
     [node]
   );
@@ -68,7 +69,6 @@ const NodeItem: FC<NodeItemProps> = ({ node, updateNode }) => {
       const data: Node = JSON.parse(e.dataTransfer.getData("application/json"));
       const { isStartNode, isTargetNode } = data;
 
-      setIsDragged(false);
       updateNode(node.rowIndex, node.colIndex, {
         ...node,
         isStartNode,
@@ -80,6 +80,8 @@ const NodeItem: FC<NodeItemProps> = ({ node, updateNode }) => {
         isStartNode: false,
         isTargetNode: false,
       });
+
+      setIsDragged(false);
     },
     [node, updateNode]
   );
@@ -99,11 +101,21 @@ const NodeItem: FC<NodeItemProps> = ({ node, updateNode }) => {
       }}
       className={twMerge(
         "border bg-slate-900/50 border-slate-300/10 text-slate-200",
-        "transition-all duration-150 flex items-center justify-center",
-        node.isShortestPath ? "bg-amber-400 border-amber-400" : "",
-        node.isVisited ? "bg-sky-500 border-sky-600" : "",
-        node.isWall ? "bg-black/60 border-black" : "",
-        node.isStartNode || node.isTargetNode ? "cursor-pointer" : ""
+        "transition-all flex items-center justify-center relative",
+        "after:content-[''] after:absolute after:w-full after:h-full after:inset-0",
+        "after:transition-[transform] after:duration-500 after:scale-0",
+        node.isShortestPath
+          ? "after:scale-100 duration-1000 after:bg-amber-400 border-amber-400"
+          : "",
+        node.isVisited
+          ? "after:scale-100 duration-1000 after:bg-sky-500 border-sky-600"
+          : "",
+        node.isWall
+          ? "after:scale-100 duration-1000 after:bg-black/60 border-black"
+          : "",
+        node.isStartNode || node.isTargetNode
+          ? "cursor-pointer duration-200"
+          : ""
       )}
     >
       {node.isStartNode && <GoChevronRight />}
