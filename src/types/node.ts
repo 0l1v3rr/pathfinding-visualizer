@@ -30,13 +30,15 @@ export const generateEmptyGraph = (): Node[][] => {
   }
 
   const halfHeight = Math.floor(GRAPH_HEIGHT / 2);
+  const startCol = Math.floor(GRAPH_WIDTH / 4);
+  const targetCol = Math.floor((GRAPH_WIDTH / 4) * 3);
 
-  res[halfHeight][Math.floor(GRAPH_WIDTH / 4)] = {
-    ...res[0][0],
+  res[halfHeight][startCol] = {
+    ...res[halfHeight][startCol],
     isStartNode: true,
   };
-  res[halfHeight][Math.floor((GRAPH_WIDTH / 4) * 3)] = {
-    ...res[0][1],
+  res[halfHeight][targetCol] = {
+    ...res[halfHeight][targetCol],
     isTargetNode: true,
   };
 
