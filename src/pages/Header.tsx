@@ -7,9 +7,8 @@ import { algorithms } from "../const/algorithms";
 import { NodeContext, NodeContextType } from "../context/NodeContext";
 
 const Header = () => {
-  const { selectedAlgorithm, setSelectedAlgorithm } = useContext(
-    NodeContext
-  ) as NodeContextType;
+  const { selectedAlgorithm, setSelectedAlgorithm, clearWalls, resetBoard } =
+    useContext(NodeContext) as NodeContextType;
 
   return (
     <header
@@ -28,10 +27,10 @@ const Header = () => {
         className="md:ml-auto"
       />
 
-      <HeaderButton label="Reset Board" onClick={() => {}} />
+      <HeaderButton label="Reset Board" onClick={() => resetBoard()} />
       <HeaderButton
         label="Clear Walls"
-        onClick={() => {}}
+        onClick={() => clearWalls()}
         className="hidden sm:block"
       />
       <Button label="Visualize!" onClick={() => {}} />
@@ -44,7 +43,8 @@ const Header = () => {
         aria-label="GitHub"
         target="_blank"
         className="text-slate-400 text-xl cursor-pointer duration-150 
-          transition-all hover:text-slate-200 hidden sm:block"
+          transition-all hover:text-slate-200 hidden sm:block 
+          focus:text-slate-200 outline-none"
       >
         <BsGithub />
       </a>

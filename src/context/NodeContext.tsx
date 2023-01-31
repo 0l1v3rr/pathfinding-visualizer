@@ -9,6 +9,8 @@ interface NodeProviderProps {
 export interface NodeContextType {
   nodes: Array<Array<Node>>;
   updateNode: (row: number, col: number, newNode: Node) => void;
+  clearWalls: () => void;
+  resetBoard: () => void;
   selectedAlgorithm: string;
   setSelectedAlgorithm: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -29,6 +31,16 @@ export const NodeProvider: FC<NodeProviderProps> = ({ children }) => {
     });
   }, []);
 
+  const clearWalls = useCallback(() => {
+    setNodes((prev) => {
+      return [...prev].map((row) =>
+        row.map((node) => ({ ...node, isWall: false }))
+      );
+    });
+  }, []);
+
+  const resetBoard = useCallback(() => setNodes(generateEmptyGraph()), []);
+
   return (
     <NodeContext.Provider
       value={{
@@ -36,6 +48,8 @@ export const NodeProvider: FC<NodeProviderProps> = ({ children }) => {
         updateNode,
         selectedAlgorithm,
         setSelectedAlgorithm,
+        clearWalls,
+        resetBoard,
       }}
     >
       {children}

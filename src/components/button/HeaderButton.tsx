@@ -12,7 +12,7 @@ const HeaderButton: FC<HeaderButtonProps> = ({ label, className, onClick }) => {
     <button
       className={twMerge(
         "text-slate-200 font-semibold transition-all duration-150 leading-none",
-        "hover:text-sky-400",
+        "hover:text-sky-400 outline-none focus:text-sky-400",
         className
       )}
       onClick={onClick}
