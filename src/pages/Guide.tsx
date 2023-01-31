@@ -4,7 +4,7 @@ import { BiTargetLock } from "react-icons/bi";
 const Guide = () => {
   return (
     <div
-      className="flex items-center justify-center mx-2 sm:mx-4 md:mx-10 my-5 
+      className="flex items-center justify-center mx-2 sm:mx-4 md:mx-10 mt-[4.9rem] mb-5 
         select-none text-lg text-slate-200 gap-x-16 gap-y-4 border border-slate-300/10 px-8 
         py-2 rounded-lg bg-slate-900/50 shadow-md flex-wrap"
     >

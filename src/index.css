@@ -26,4 +26,17 @@
       hsl(222deg 47% 11%) 100%
     );
   }
+
+  *::-webkit-scrollbar {
+    @apply w-3;
+  }
+
+  *::-webkit-scrollbar-track {
+    @apply bg-slate-900 border;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    @apply bg-zinc-200/[.15] rounded-md transition-all border-[3px] 
+      border-solid border-transparent bg-clip-content;
+  }
 }

@@ -13,8 +13,9 @@ const Header = () => {
 
   return (
     <header
-      className="px-4 sm:px-10 py-3 flex items-center border-b border-slate-300/10 
-        gap-8 justify-center md:justify-start shadow-sm backdrop-blur-md z-10"
+      className="px-4 sm:px-10 py-3 flex items-center border-b border-slate-300/10 top-0
+        gap-8 justify-center md:justify-start backdrop-blur-sm z-10 fixed w-full 
+        bg-slate-900/20 shadow-md"
     >
       <h1 className="hidden md:block text-slate-200 font-semibold text-xl font-arial">
         Pathfinding
