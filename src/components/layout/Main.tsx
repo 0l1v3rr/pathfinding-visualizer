@@ -10,7 +10,7 @@ const Main: FC<MainProps> = ({ children, className }) => {
   return (
     <main
       className={twMerge(
-        "w-full min-h-screen flex flex-col overflow-x-hidden",
+        "w-full min-h-screen flex flex-col overflow-x-hidden pb-5",
         "bg-gradient",
         className
       )}

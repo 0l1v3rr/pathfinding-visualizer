@@ -97,15 +97,18 @@ const NodeItem: FC<NodeItemProps> = ({ node }) => {
       onDrop={(e) => handleDrop(e)}
       onDragOver={(e) => e.preventDefault()}
       style={{
-        width: `calc((100vw - 5rem) / ${GRAPH_WIDTH})`,
-        height: `calc((100vw - 5rem) / ${GRAPH_WIDTH})`,
-        fontSize: isDragged ? "0" : `calc((100vw - 5rem) / ${GRAPH_WIDTH})`,
+        width: `calc(100vi / ${GRAPH_WIDTH})`,
+        height: `calc(100vi / ${GRAPH_WIDTH})`,
+        fontSize: isDragged ? "0" : `calc((100vi) / ${GRAPH_WIDTH})`,
+        // width: `calc((100vw - 5rem) / ${GRAPH_WIDTH})`,
+        // height: `calc((100vw - 5rem) / ${GRAPH_WIDTH})`,
+        // fontSize: isDragged ? "0" : `calc((100vw - 5rem) / ${GRAPH_WIDTH})`,
       }}
       className={twMerge(
         "border bg-slate-900/50 border-slate-300/10 text-slate-200",
         "transition-all flex items-center justify-center relative",
         "after:content-[''] after:absolute after:w-full after:h-full after:inset-0",
-        "after:transition-[transform] after:duration-500 after:scale-0",
+        "after:transition-[transform] after:duration-500 after:scale-0 overflow-hidden",
         node.isShortestPath
           ? "after:scale-100 duration-1000 after:bg-amber-400 border-amber-400"
           : "",
