@@ -1,15 +1,17 @@
-import { FC, useCallback, useMemo, useState } from "react";
+import { FC, useCallback, useContext, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { GRAPH_WIDTH, Node } from "../../types/node";
 import { GoChevronRight } from "react-icons/go";
 import { BiTargetLock } from "react-icons/bi";
+import { NodeContext, NodeContextType } from "../../context/NodeContext";
 
 interface NodeItemProps {
   node: Node;
-  updateNode: (row: number, col: number, newNode: Node) => void;
 }
 
-const NodeItem: FC<NodeItemProps> = ({ node, updateNode }) => {
+const NodeItem: FC<NodeItemProps> = ({ node }) => {
+  const { updateNode } = useContext(NodeContext) as NodeContextType;
+
   const [isDragged, setIsDragged] = useState<boolean>(false);
   const isNotRegularNode = useMemo(() => {
     return (

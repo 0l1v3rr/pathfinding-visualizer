@@ -1,19 +1,16 @@
 import Button from "../components/button/Button";
 import HeaderButton from "../components/button/HeaderButton";
 import { BsGithub } from "react-icons/bs";
-import { FC } from "react";
+import { useContext } from "react";
 import Select from "../components/input/Select";
 import { algorithms } from "../const/algorithms";
+import { NodeContext, NodeContextType } from "../context/NodeContext";
 
-interface HeaderProps {
-  selectedAlgorithm: string;
-  setSelectedAlgorithm: (val: string) => void;
-}
+const Header = () => {
+  const { selectedAlgorithm, setSelectedAlgorithm } = useContext(
+    NodeContext
+  ) as NodeContextType;
 
-const Header: FC<HeaderProps> = ({
-  selectedAlgorithm,
-  setSelectedAlgorithm,
-}) => {
   return (
     <header
       className="px-4 sm:px-10 py-3 flex items-center border-b border-slate-300/10 
