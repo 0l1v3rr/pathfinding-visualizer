@@ -39,7 +39,12 @@ const Select: FC<SelectInputProps> = ({
       )}
     >
       <span>{value}</span>
-      <FiChevronDown />
+      <FiChevronDown
+        className={twMerge(
+          "transition-all duration-150",
+          isOpen ? "-rotate-180" : "rotate-0"
+        )}
+      />
 
       <div
         className={twMerge(
