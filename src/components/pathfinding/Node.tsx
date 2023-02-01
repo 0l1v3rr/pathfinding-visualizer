@@ -105,18 +105,18 @@ const NodeItem: FC<NodeItemProps> = ({ node }) => {
         // fontSize: isDragged ? "0" : `calc((100vw - 5rem) / ${GRAPH_WIDTH})`,
       }}
       className={twMerge(
-        "border bg-slate-900/50 border-slate-300/10 text-slate-200",
-        "transition-all flex items-center justify-center relative",
-        "after:content-[''] after:absolute after:w-full after:h-full after:inset-0",
-        "after:transition-[transform] after:duration-500 after:scale-0 overflow-hidden",
+        "border border-slate-300/10 bg-slate-900/50 text-slate-200",
+        "relative flex items-center justify-center transition-all",
+        "after:absolute after:inset-0 after:h-full after:w-full after:content-['']",
+        "overflow-hidden after:scale-0 after:transition-[transform] after:duration-500",
         node.isShortestPath
-          ? "after:scale-100 duration-1000 after:bg-amber-400 border-amber-400"
+          ? "border-amber-400 duration-1000 after:scale-100 after:bg-amber-400"
           : "",
         node.isVisited
-          ? "after:scale-100 duration-1000 after:bg-sky-500 border-sky-600"
+          ? "border-sky-600 duration-1000 after:scale-100 after:bg-sky-500"
           : "",
         node.isWall
-          ? "after:scale-100 duration-1000 after:bg-black/60 border-black"
+          ? "border-black duration-1000 after:scale-100 after:bg-black/60"
           : "",
         node.isStartNode || node.isTargetNode
           ? "cursor-pointer duration-200"

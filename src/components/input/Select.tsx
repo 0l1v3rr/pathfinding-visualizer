@@ -30,11 +30,11 @@ const Select: FC<SelectInputProps> = ({
       onClick={() => setIsOpen(true)}
       onBlur={() => setIsOpen(false)}
       className={twMerge(
-        `relative bg-slate-800 rounded-xl border px-3 py-1
-          border-slate-700 leading-none flex items-center justify-center 
-          gap-2 text-slate-400 font-semibold text-sm transition-all 
-          duration-150 hover:border-slate-500 hover:bg-slate-700/75 z-10
-          focus:border-slate-500 focus:bg-slate-700/75 outline-none whitespace-nowrap`,
+        `relative z-10 flex items-center justify-center gap-2
+          whitespace-nowrap rounded-xl border border-slate-700 bg-slate-800 
+          px-3 py-1 text-sm font-semibold leading-none 
+          text-slate-400 outline-none transition-all duration-150
+          hover:border-slate-500 hover:bg-slate-700/75 focus:border-slate-500 focus:bg-slate-700/75`,
         className
       )}
     >
@@ -48,7 +48,7 @@ const Select: FC<SelectInputProps> = ({
 
       <div
         className={twMerge(
-          "absolute bg-slate-800 border border-slate-700 rounded-lg top-10 left-0 shadow-md py-2 z-10",
+          "absolute top-10 left-0 z-10 rounded-lg border border-slate-700 bg-slate-800 py-2 shadow-md",
           isOpen ? "block" : "hidden"
         )}
       >
@@ -61,7 +61,7 @@ const Select: FC<SelectInputProps> = ({
               onClick={(e) => handleSelectValue(e, option)}
               className={twMerge(
                 "flex items-center justify-between",
-                "py-2 px-4 font-semibold text-sm w-56 cursor-pointer hover:bg-slate-700",
+                "w-56 cursor-pointer py-2 px-4 text-sm font-semibold hover:bg-slate-700",
                 isSelected ? "text-sky-400" : "text-slate-300"
               )}
             >

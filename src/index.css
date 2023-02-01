@@ -32,11 +32,11 @@
   }
 
   *::-webkit-scrollbar-track {
-    @apply bg-slate-900 border;
+    @apply border bg-slate-900;
   }
 
   *::-webkit-scrollbar-thumb {
-    @apply bg-zinc-200/[.15] rounded-md transition-all border-[3px] 
-      border-solid border-transparent bg-clip-content;
+    @apply rounded-md border-[3px] border-solid border-transparent 
+      bg-zinc-200/[.15] bg-clip-content transition-all;
   }
 }
