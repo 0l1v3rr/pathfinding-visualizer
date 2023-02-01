@@ -32,7 +32,7 @@ const Select: FC<SelectInputProps> = ({
       className={twMerge(
         `relative z-10 flex items-center justify-center gap-2
           whitespace-nowrap rounded-xl border border-slate-700 bg-slate-800 
-          px-3 py-1 text-sm font-semibold leading-none 
+          px-3 py-2 text-sm font-semibold leading-none 
           text-slate-400 outline-none transition-all duration-150
           hover:border-slate-500 hover:bg-slate-700/75 focus:border-slate-500 focus:bg-slate-700/75`,
         className
