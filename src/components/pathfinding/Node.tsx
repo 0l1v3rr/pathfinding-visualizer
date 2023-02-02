@@ -1,4 +1,4 @@
-import { FC, useCallback, useContext, useMemo, useState } from "react";
+import React, { FC, useCallback, useContext, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { GRAPH_WIDTH, Node } from "../../types/node";
 import { GoChevronRight } from "react-icons/go";
@@ -88,6 +88,15 @@ const NodeItem: FC<NodeItemProps> = ({ node }) => {
     [node, updateNode]
   );
 
+  const handleDragOver = useCallback(
+    (e: React.DragEvent) => {
+      if (node.isWall || node.isStartNode || node.isTargetNode) return;
+
+      e.preventDefault();
+    },
+    [node.isStartNode, node.isTargetNode, node.isWall]
+  );
+
   return (
     <div
       draggable={node.isStartNode || node.isTargetNode}
@@ -95,7 +104,7 @@ const NodeItem: FC<NodeItemProps> = ({ node }) => {
       onDragStart={(e) => handleDragStart(e)}
       onDragEnd={() => setIsDragged(false)}
       onDrop={(e) => handleDrop(e)}
-      onDragOver={(e) => e.preventDefault()}
+      onDragOver={(e) => handleDragOver(e)}
       style={{
         width: `calc(100vi / ${GRAPH_WIDTH})`,
         height: `calc(100vi / ${GRAPH_WIDTH})`,
