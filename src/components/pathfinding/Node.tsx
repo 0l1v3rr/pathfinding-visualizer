@@ -117,9 +117,11 @@ const NodeItem: FC<NodeItemProps> = ({ node }) => {
         "border border-slate-300/10 bg-slate-900/50 text-slate-200",
         "relative flex items-center justify-center transition-all",
         "after:absolute after:inset-0 after:h-full after:w-full after:content-['']",
-        "overflow-hidden after:scale-0 after:transition-[transform] after:duration-500",
+        "overflow-hidden after:scale-50 after:rounded-sm after:hue-rotate-90",
+        "after:transition-[transform,filter] after:duration-300",
         node.isVisited
-          ? "border-sky-600 duration-1000 after:scale-100 after:bg-sky-500"
+          ? `border-sky-600 duration-1000 after:scale-100 after:rounded-none
+              after:bg-sky-500 after:hue-rotate-0`
           : "",
         node.isShortestPath
           ? "border-amber-400 duration-1000 after:scale-100 after:bg-amber-400"
@@ -132,8 +134,27 @@ const NodeItem: FC<NodeItemProps> = ({ node }) => {
           : ""
       )}
     >
-      {node.isStartNode && <GoChevronRight />}
-      {node.isTargetNode && <BiTargetLock />}
+      {node.isStartNode && (
+        <GoChevronRight
+          className={twMerge(
+            "z-20",
+            node.isShortestPath || node.isVisited
+              ? "text-slate-900"
+              : "text-slate-200"
+          )}
+        />
+      )}
+
+      {node.isTargetNode && (
+        <BiTargetLock
+          className={twMerge(
+            "z-20",
+            node.isShortestPath || node.isVisited
+              ? "text-slate-900"
+              : "text-slate-200"
+          )}
+        />
+      )}
     </div>
   );
 };

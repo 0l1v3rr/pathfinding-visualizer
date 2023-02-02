@@ -48,7 +48,7 @@ export const useDijkstras = () => {
         return visitedNodesInOrder;
       }
 
-      // await sleep(4);
+      await sleep(4);
       updateNode(closestNode.rowIndex, closestNode.colIndex, {
         ...closestNode,
         isVisited: true,
