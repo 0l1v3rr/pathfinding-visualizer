@@ -6,6 +6,7 @@ export interface Node {
   isTargetNode: boolean;
   isVisited: boolean;
   isShortestPath: boolean;
+  distance: number;
 }
 
 export const GRAPH_WIDTH = 40;
@@ -25,6 +26,7 @@ export const generateEmptyGraph = (): Node[][] => {
         isTargetNode: false,
         isVisited: false,
         isWall: false,
+        distance: GRAPH_WIDTH * GRAPH_HEIGHT,
       };
     }
   }
@@ -43,4 +45,24 @@ export const generateEmptyGraph = (): Node[][] => {
   };
 
   return res;
+};
+
+export const getStartNode = (grid: Node[][]): Node => {
+  for (let row = 0; row < GRAPH_HEIGHT; row++) {
+    for (let col = 0; col < GRAPH_WIDTH; col++) {
+      if (grid[row][col].isStartNode) return grid[row][col];
+    }
+  }
+
+  return grid[0][0];
+};
+
+export const getTargetNode = (grid: Node[][]): Node => {
+  for (let row = 0; row < GRAPH_HEIGHT; row++) {
+    for (let col = 0; col < GRAPH_WIDTH; col++) {
+      if (grid[row][col].isTargetNode) return grid[row][col];
+    }
+  }
+
+  return grid[0][0];
 };

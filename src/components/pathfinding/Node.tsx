@@ -118,11 +118,11 @@ const NodeItem: FC<NodeItemProps> = ({ node }) => {
         "relative flex items-center justify-center transition-all",
         "after:absolute after:inset-0 after:h-full after:w-full after:content-['']",
         "overflow-hidden after:scale-0 after:transition-[transform] after:duration-500",
-        node.isShortestPath
-          ? "border-amber-400 duration-1000 after:scale-100 after:bg-amber-400"
-          : "",
         node.isVisited
           ? "border-sky-600 duration-1000 after:scale-100 after:bg-sky-500"
+          : "",
+        node.isShortestPath
+          ? "border-amber-400 duration-1000 after:scale-100 after:bg-amber-400"
           : "",
         node.isWall
           ? "border-black duration-1000 after:scale-100 after:bg-black/60"

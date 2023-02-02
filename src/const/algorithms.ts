@@ -5,4 +5,6 @@ export const algorithms = [
   "Swarm Algorithm",
   "Breadth-first Search",
   "Depth-first Search",
-];
+] as const;
+
+export type AlgorithmType = (typeof algorithms)[number];

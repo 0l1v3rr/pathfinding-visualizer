@@ -5,7 +5,7 @@ import { FiChevronDown, FiCheck } from "react-icons/fi";
 interface SelectInputProps {
   value: string;
   setValue: (value: string) => void;
-  options: string[];
+  options: readonly string[];
   className?: string;
 }
 

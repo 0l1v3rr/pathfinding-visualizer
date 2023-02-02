@@ -5,10 +5,12 @@ import { useContext } from "react";
 import Select from "../components/input/Select";
 import { algorithms } from "../const/algorithms";
 import { NodeContext, NodeContextType } from "../context/NodeContext";
+import { useVisualize } from "../hooks/useVisualize";
 
 const Header = () => {
   const { selectedAlgorithm, setSelectedAlgorithm, clearWalls, resetBoard } =
     useContext(NodeContext) as NodeContextType;
+  const visualizeAlgorithm = useVisualize(selectedAlgorithm);
 
   return (
     <header
@@ -33,7 +35,7 @@ const Header = () => {
         onClick={() => clearWalls()}
         className="hidden sm:block"
       />
-      <Button label="Visualize!" onClick={() => {}} />
+      <Button label="Visualize!" onClick={() => visualizeAlgorithm()} />
 
       <div className="hidden h-6 w-[1px] bg-slate-300/10 sm:block" />
 
