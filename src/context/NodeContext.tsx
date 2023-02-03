@@ -9,6 +9,8 @@ interface NodeProviderProps {
 export interface NodeContextType {
   nodes: Array<Array<Node>>;
   updateNode: (row: number, col: number, newNode: Node) => void;
+  markNodeAsVisited: (node: Node) => void;
+  markNodeAsShortestPath: (node: Node) => void;
   clearWalls: () => void;
   resetBoard: () => void;
   selectedAlgorithm: string;
@@ -39,6 +41,22 @@ export const NodeProvider: FC<NodeProviderProps> = ({ children }) => {
     });
   }, []);
 
+  const markNodeAsVisited = useCallback(
+    (node: Node) =>
+      updateNode(node.rowIndex, node.colIndex, { ...node, isVisited: true }),
+    [updateNode]
+  );
+
+  const markNodeAsShortestPath = useCallback(
+    (node: Node) =>
+      updateNode(node.rowIndex, node.colIndex, {
+        ...node,
+        isVisited: false,
+        isShortestPath: true,
+      }),
+    [updateNode]
+  );
+
   const resetBoard = useCallback(() => setNodes(generateEmptyGraph()), []);
 
   return (
@@ -50,6 +68,8 @@ export const NodeProvider: FC<NodeProviderProps> = ({ children }) => {
         setSelectedAlgorithm,
         clearWalls,
         resetBoard,
+        markNodeAsVisited,
+        markNodeAsShortestPath,
       }}
     >
       {children}

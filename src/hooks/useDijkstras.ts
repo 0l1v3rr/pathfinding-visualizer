@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { NodeContext, NodeContextType } from "../context/NodeContext";
 import { Node, getStartNode, getTargetNode } from "../types/node";
 import {
@@ -9,59 +9,48 @@ import {
 import { sleep } from "../utils/sleep";
 
 export const useDijkstras = () => {
-  const { nodes, updateNode } = useContext(NodeContext) as NodeContextType;
+  const { nodes, markNodeAsVisited, markNodeAsShortestPath } = useContext(
+    NodeContext
+  ) as NodeContextType;
 
-  const dijkstra = async (
-    grid: Node[][],
-    startNode: Node,
-    finishNode: Node
-  ) => {
-    const visitedNodesInOrder: Node[] = [];
-    startNode.distance = 0;
+  const dijkstra = useCallback(
+    async (grid: Node[][], startNode: Node, finishNode: Node) => {
+      const unvisitedNodes = getAllNodes(grid);
+      startNode.distance = 0;
 
-    const unvisitedNodes = getAllNodes(grid);
+      while (unvisitedNodes.length > 0) {
+        unvisitedNodes.sort((a, b) => a.distance - b.distance);
 
-    while (unvisitedNodes.length > 0) {
-      unvisitedNodes.sort((a, b) => a.distance - b.distance);
+        const closestNode = unvisitedNodes.shift();
+        if (!closestNode) continue;
 
-      // remove the first element
-      const closestNode = unvisitedNodes.shift();
-      if (!closestNode) continue;
+        // it's a wall, do nothing
+        if (closestNode.isWall) continue;
 
-      // it's a wall, do nothing
-      if (closestNode.isWall) continue;
+        // if the distance is infinity, we are trapped, that's why we return.
+        if (closestNode.distance === Infinity) return;
 
-      // If the distance is infinity, we are trapped, that's why we return.
-      if (closestNode.distance === Infinity) return;
+        closestNode.isVisited = true;
 
-      closestNode.isVisited = true;
-      visitedNodesInOrder.push(closestNode);
+        // if we hit the target
+        if (closestNode === finishNode) {
+          for (const n of getShortestPathNodes(finishNode)) {
+            markNodeAsShortestPath(n);
+            await sleep(50);
+          }
 
-      if (closestNode === finishNode) {
-        for (const n of getShortestPathNodes(finishNode)) {
-          updateNode(n.rowIndex, n.colIndex, {
-            ...n,
-            isVisited: false,
-            isShortestPath: true,
-          });
-          await sleep(50);
+          return;
         }
 
-        return;
+        // update the state and "sleep" for X milliseconds
+        await sleep(4);
+        markNodeAsVisited(closestNode);
+
+        updateUnvisitedNeighbours(closestNode, grid);
       }
-
-      // "sleep" for X milliseconds
-      await sleep(4);
-
-      // update the state
-      updateNode(closestNode.rowIndex, closestNode.colIndex, {
-        ...closestNode,
-        isVisited: true,
-      });
-
-      updateUnvisitedNeighbours(closestNode, grid);
-    }
-  };
+    },
+    [markNodeAsShortestPath, markNodeAsVisited]
+  );
 
   return async () => {
     await dijkstra(nodes, getStartNode(nodes), getTargetNode(nodes));

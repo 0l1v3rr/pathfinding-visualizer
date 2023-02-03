@@ -36,7 +36,7 @@ export const updateUnvisitedNeighbours = (node: Node, grid: Node[][]) => {
 
   for (const neighbor of neighbours) {
     neighbor.distance = node.distance + 1;
-    neighbor.previousNode = node;
+    neighbor.previousNode = { ...node };
   }
 };
 
@@ -47,7 +47,6 @@ export function getShortestPathNodes(finishNode: Node) {
   let currentNode: Node | null = finishNode;
   while (currentNode !== null) {
     nodes.unshift(currentNode);
-
     currentNode = currentNode.previousNode;
   }
 
