@@ -7,6 +7,7 @@ export interface Node {
   isVisited: boolean;
   isShortestPath: boolean;
   distance: number;
+  previousNode: Node | null;
 }
 
 export const GRAPH_WIDTH = 40;
@@ -26,7 +27,8 @@ export const generateEmptyGraph = (): Node[][] => {
         isTargetNode: false,
         isVisited: false,
         isWall: false,
-        distance: GRAPH_WIDTH * GRAPH_HEIGHT,
+        distance: Infinity,
+        previousNode: null,
       };
     }
   }
