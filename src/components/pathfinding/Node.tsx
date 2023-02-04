@@ -75,12 +75,14 @@ const NodeItem: FC<NodeItemProps> = ({ node }) => {
         ...node,
         isStartNode,
         isTargetNode,
+        distance: isStartNode ? 0 : Infinity,
       });
 
       updateNode(data.rowIndex, data.colIndex, {
         ...data,
         isStartNode: false,
         isTargetNode: false,
+        distance: Infinity,
       });
 
       setIsDragged(false);

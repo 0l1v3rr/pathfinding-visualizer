@@ -40,31 +40,13 @@ export const generateEmptyGraph = (): Node[][] => {
   res[halfHeight][startCol] = {
     ...res[halfHeight][startCol],
     isStartNode: true,
+    distance: 0,
   };
   res[halfHeight][targetCol] = {
     ...res[halfHeight][targetCol],
     isTargetNode: true,
+    distance: Infinity,
   };
 
   return res;
-};
-
-export const getStartNode = (grid: Node[][]): Node => {
-  for (let row = 0; row < GRAPH_HEIGHT; row++) {
-    for (let col = 0; col < GRAPH_WIDTH; col++) {
-      if (grid[row][col].isStartNode) return grid[row][col];
-    }
-  }
-
-  return grid[0][0];
-};
-
-export const getTargetNode = (grid: Node[][]): Node => {
-  for (let row = 0; row < GRAPH_HEIGHT; row++) {
-    for (let col = 0; col < GRAPH_WIDTH; col++) {
-      if (grid[row][col].isTargetNode) return grid[row][col];
-    }
-  }
-
-  return grid[0][0];
 };
