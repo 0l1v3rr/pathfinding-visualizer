@@ -60,7 +60,7 @@ export const useDijkstras = () => {
     if (finishNode !== null) {
       for (const n of getShortestPathNodes(finishNode)) {
         markNodeAsShortestPath(n);
-        await sleep(15);
+        await sleep(50);
       }
     }
   };

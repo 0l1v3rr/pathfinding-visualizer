@@ -122,10 +122,10 @@ const NodeItem: FC<NodeItemProps> = ({ node }) => {
         "overflow-hidden after:scale-50 after:hue-rotate-90",
         "after:transition-[transform,filter] after:duration-300",
         node.isVisited
-          ? "border-sky-600 duration-1000 after:scale-100 after:bg-sky-500 after:hue-rotate-0"
+          ? "border-sky-600 bg-red-400 duration-1000 after:scale-100 after:bg-sky-500 after:hue-rotate-0"
           : "",
         node.isShortestPath
-          ? "border-amber-500 duration-1000 after:scale-100 after:bg-amber-400 after:hue-rotate-0"
+          ? "border-amber-500 bg-amber-400 duration-500 after:scale-0 after:hue-rotate-0"
           : "",
         node.isWall
           ? "border-black duration-1000 after:scale-100 after:bg-black/60"
