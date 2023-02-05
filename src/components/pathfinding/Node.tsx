@@ -7,10 +7,18 @@ import { NodeContext, NodeContextType } from "../../context/NodeContext";
 
 interface NodeItemProps {
   node: Node;
+  isMousePressed: boolean;
+  setIsMousePressed: (val: boolean) => void;
 }
 
-const NodeItem: FC<NodeItemProps> = ({ node }) => {
-  const { updateNode } = useContext(NodeContext) as NodeContextType;
+const NodeItem: FC<NodeItemProps> = ({
+  node,
+  setIsMousePressed,
+  isMousePressed,
+}) => {
+  const { updateNode, updateWallStatus } = useContext(
+    NodeContext
+  ) as NodeContextType;
 
   const [isDragged, setIsDragged] = useState<boolean>(false);
   const isNotRegularNode = useMemo(() => {
@@ -18,40 +26,38 @@ const NodeItem: FC<NodeItemProps> = ({ node }) => {
       node.isShortestPath ||
       node.isStartNode ||
       node.isTargetNode ||
-      node.isVisited ||
-      node.isWall
+      node.isVisited
     );
   }, [node]);
 
-  const updateWallStatus = useCallback(
-    (isWall: boolean) => {
-      updateNode(node.rowIndex, node.colIndex, {
-        ...node,
-        isWall,
-      });
-    },
-    [updateNode, node]
-  );
-
   const handleMouseEnter = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      if (e.ctrlKey && node.isWall) {
-        updateWallStatus(false);
-        return;
-      }
-
+      // we only create walls if the mouse is pressed and it's an empty node
+      if (!isMousePressed) return;
       if (isNotRegularNode) return;
 
-      if (e.shiftKey && !node.isWall) {
-        updateWallStatus(true);
+      const { isWall } = node;
+
+      // if the control is pressed, we only REMOVE walls
+      if (e.ctrlKey && !isWall) {
+        updateWallStatus(node, false);
         return;
       }
+
+      // if the shift is pressed, we only CREATE walls
+      if (e.shiftKey && isWall) {
+        updateWallStatus(node, true);
+        return;
+      }
+
+      updateWallStatus(node, !isWall);
     },
-    [node, isNotRegularNode, updateWallStatus]
+    [isMousePressed, updateWallStatus, node, isNotRegularNode]
   );
 
   const handleDragStart = useCallback(
     (e: React.DragEvent) => {
+      // we cannot drag a node if it's not the start or the target node
       if (!node.isStartNode && !node.isTargetNode) {
         e.preventDefault();
         return;
@@ -61,9 +67,10 @@ const NodeItem: FC<NodeItemProps> = ({ node }) => {
       e.dataTransfer.effectAllowed = "move";
       e.dataTransfer.setData("application/json", JSON.stringify(node));
 
+      setIsMousePressed(false);
       setTimeout(() => setIsDragged(true), 0);
     },
-    [node]
+    [node, setIsMousePressed]
   );
 
   const handleDrop = useCallback(
@@ -86,8 +93,9 @@ const NodeItem: FC<NodeItemProps> = ({ node }) => {
       });
 
       setIsDragged(false);
+      setIsMousePressed(false);
     },
-    [node, updateNode]
+    [node, updateNode, setIsMousePressed]
   );
 
   const handleDragOver = useCallback(
@@ -103,6 +111,8 @@ const NodeItem: FC<NodeItemProps> = ({ node }) => {
     <div
       draggable={node.isStartNode || node.isTargetNode}
       onMouseEnter={(e) => handleMouseEnter(e)}
+      onMouseDown={() => setIsMousePressed(true)}
+      onMouseUp={() => setIsMousePressed(false)}
       onDragStart={(e) => handleDragStart(e)}
       onDragEnd={() => setIsDragged(false)}
       onDrop={(e) => handleDrop(e)}

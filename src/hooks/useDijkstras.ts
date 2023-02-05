@@ -28,8 +28,7 @@ export const useDijkstras = () => {
     while (unvisitedNodes.length > 0) {
       unvisitedNodes.sort((a, b) => a.distance - b.distance);
 
-      const closestNode = unvisitedNodes.shift();
-      if (!closestNode) continue;
+      const closestNode = unvisitedNodes.shift()!;
 
       // it's a wall, do nothing
       if (closestNode.isWall) continue;

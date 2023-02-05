@@ -11,6 +11,7 @@ export interface NodeContextType {
   updateNode: (row: number, col: number, newNode: Node) => void;
   markNodeAsVisited: (node: Node) => void;
   markNodeAsShortestPath: (node: Node) => void;
+  updateWallStatus: (node: Node, isWall: boolean) => void;
   clearWalls: () => void;
   resetBoard: () => void;
   selectedAlgorithm: string;
@@ -57,15 +58,22 @@ export const NodeProvider: FC<NodeProviderProps> = ({ children }) => {
     [updateNode]
   );
 
+  const updateWallStatus = useCallback(
+    (node: Node, isWall: boolean) =>
+      updateNode(node.rowIndex, node.colIndex, { ...node, isWall }),
+    [updateNode]
+  );
+
   const resetBoard = useCallback(() => setNodes(generateEmptyGraph()), []);
 
   return (
     <NodeContext.Provider
       value={{
         nodes,
-        updateNode,
         selectedAlgorithm,
+        updateNode,
         setSelectedAlgorithm,
+        updateWallStatus,
         clearWalls,
         resetBoard,
         markNodeAsVisited,
