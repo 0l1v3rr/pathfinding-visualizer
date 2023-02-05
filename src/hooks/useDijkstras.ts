@@ -30,10 +30,7 @@ export const useDijkstras = () => {
 
       const closestNode = unvisitedNodes.shift()!;
 
-      // it's a wall, do nothing
       if (closestNode.isWall) continue;
-
-      // if the distance is infinity, we are trapped, that's why we return.
       if (closestNode.distance === Infinity) return [visitedNodes, null];
 
       visitedNodes.push(closestNode);
