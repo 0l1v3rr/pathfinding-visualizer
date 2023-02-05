@@ -10,7 +10,7 @@ export const getAllNodes = (grid: Node[][]) => {
   return nodes;
 };
 
-export const getUnvisitedNeighbours = (node: Node, grid: Node[][]) => {
+export const getNeighbours = (node: Node, grid: Node[][]) => {
   const neighbours = [];
   const { rowIndex, colIndex } = node;
 
@@ -28,8 +28,11 @@ export const getUnvisitedNeighbours = (node: Node, grid: Node[][]) => {
     neighbours.push(grid[rowIndex][colIndex + 1]);
   }
 
-  return neighbours.filter((neighbor) => !neighbor.isVisited);
+  return neighbours;
 };
+
+export const getUnvisitedNeighbours = (node: Node, grid: Node[][]) =>
+  getNeighbours(node, grid).filter((neighbor) => !neighbor.isVisited);
 
 export const updateUnvisitedNeighbours = (node: Node, grid: Node[][]) => {
   const neighbours = getUnvisitedNeighbours(node, grid);

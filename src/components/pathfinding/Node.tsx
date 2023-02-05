@@ -35,6 +35,7 @@ const NodeItem: FC<NodeItemProps> = ({
       // we only create walls if the mouse is pressed and it's an empty node
       if (!isMousePressed) return;
       if (isNotRegularNode) return;
+      if (isDragged) return;
 
       const { isWall } = node;
 
@@ -52,7 +53,7 @@ const NodeItem: FC<NodeItemProps> = ({
 
       updateWallStatus(node, !isWall);
     },
-    [isMousePressed, updateWallStatus, node, isNotRegularNode]
+    [isMousePressed, updateWallStatus, node, isNotRegularNode, isDragged]
   );
 
   const handleDragStart = useCallback(
@@ -63,6 +64,7 @@ const NodeItem: FC<NodeItemProps> = ({
         return;
       }
 
+      e.dataTransfer.clearData();
       e.dataTransfer.dropEffect = "move";
       e.dataTransfer.effectAllowed = "move";
       e.dataTransfer.setData("application/json", JSON.stringify(node));
@@ -94,6 +96,7 @@ const NodeItem: FC<NodeItemProps> = ({
 
       setIsDragged(false);
       setIsMousePressed(false);
+      e.dataTransfer.clearData();
     },
     [node, updateNode, setIsMousePressed]
   );
