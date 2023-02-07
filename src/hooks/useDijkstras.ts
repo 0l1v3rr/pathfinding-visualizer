@@ -9,9 +9,8 @@ import {
 import { sleep } from "../utils/sleep";
 
 export const useDijkstras = () => {
-  const { nodes, markNodeAsVisited, markNodeAsShortestPath } = useContext(
-    NodeContext
-  ) as NodeContextType;
+  const { nodes, markNodeAsVisited, markNodeAsShortestPath, setIsRunning } =
+    useContext(NodeContext) as NodeContextType;
 
   const dijkstra = useCallback((): [Node[], Node | null] => {
     const unvisitedNodes: Node[] = getAllNodes(nodes);
@@ -46,6 +45,7 @@ export const useDijkstras = () => {
 
   // animate the nodes
   return async () => {
+    setIsRunning(true);
     const [nodesInOrder, finishNode] = dijkstra();
 
     for (const node of nodesInOrder) {
@@ -59,5 +59,7 @@ export const useDijkstras = () => {
         await sleep(50);
       }
     }
+
+    setIsRunning(false);
   };
 };

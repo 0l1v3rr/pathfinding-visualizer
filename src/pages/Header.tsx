@@ -8,8 +8,13 @@ import { NodeContext, NodeContextType } from "../context/NodeContext";
 import { useVisualize } from "../hooks/useVisualize";
 
 const Header = () => {
-  const { selectedAlgorithm, setSelectedAlgorithm, clearWalls, resetBoard } =
-    useContext(NodeContext) as NodeContextType;
+  const {
+    selectedAlgorithm,
+    setSelectedAlgorithm,
+    clearWalls,
+    resetBoard,
+    isRunning,
+  } = useContext(NodeContext) as NodeContextType;
   const visualizeAlgorithm = useVisualize(selectedAlgorithm);
 
   return (
@@ -27,15 +32,25 @@ const Header = () => {
         value={selectedAlgorithm}
         setValue={setSelectedAlgorithm}
         className="md:ml-auto"
+        disabled={isRunning}
       />
 
-      <HeaderButton label="Reset Board" onClick={() => resetBoard()} />
+      <HeaderButton
+        label="Reset Board"
+        onClick={() => resetBoard()}
+        disabled={isRunning}
+      />
       <HeaderButton
         label="Clear Walls"
         onClick={() => clearWalls()}
         className="hidden sm:block"
+        disabled={isRunning}
       />
-      <Button label="Visualize!" onClick={() => visualizeAlgorithm()} />
+      <Button
+        label="Visualize!"
+        onClick={() => visualizeAlgorithm()}
+        disabled={isRunning}
+      />
 
       <div className="hidden h-6 w-[1px] bg-slate-300/10 sm:block" />
 

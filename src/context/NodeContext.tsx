@@ -16,11 +16,14 @@ export interface NodeContextType {
   resetBoard: () => void;
   selectedAlgorithm: string;
   setSelectedAlgorithm: React.Dispatch<React.SetStateAction<string>>;
+  isRunning: boolean;
+  setIsRunning: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const NodeContext = createContext<NodeContextType | null>(null);
 
 export const NodeProvider: FC<NodeProviderProps> = ({ children }) => {
+  const [isRunning, setIsRunning] = useState<boolean>(false);
   const [nodes, setNodes] = useState<Array<Array<Node>>>(generateEmptyGraph());
   const [selectedAlgorithm, setSelectedAlgorithm] = useState<string>(
     algorithms[0]
@@ -71,8 +74,10 @@ export const NodeProvider: FC<NodeProviderProps> = ({ children }) => {
       value={{
         nodes,
         selectedAlgorithm,
-        updateNode,
         setSelectedAlgorithm,
+        isRunning,
+        setIsRunning,
+        updateNode,
         updateWallStatus,
         clearWalls,
         resetBoard,

@@ -16,7 +16,7 @@ const NodeItem: FC<NodeItemProps> = ({
   setIsMousePressed,
   isMousePressed,
 }) => {
-  const { updateNode, updateWallStatus } = useContext(
+  const { updateNode, updateWallStatus, isRunning } = useContext(
     NodeContext
   ) as NodeContextType;
 
@@ -36,6 +36,7 @@ const NodeItem: FC<NodeItemProps> = ({
       if (!isMousePressed) return;
       if (isNotRegularNode) return;
       if (isDragged) return;
+      if (isRunning) return;
 
       const { isWall } = node;
 
@@ -53,26 +54,39 @@ const NodeItem: FC<NodeItemProps> = ({
 
       updateWallStatus(node, !isWall);
     },
-    [isMousePressed, updateWallStatus, node, isNotRegularNode, isDragged]
+    [
+      isMousePressed,
+      updateWallStatus,
+      node,
+      isNotRegularNode,
+      isDragged,
+      isRunning,
+    ]
   );
 
   const handleDragStart = useCallback(
     (e: React.DragEvent) => {
+      if (isRunning) {
+        e.preventDefault();
+        return;
+      }
+
       // we cannot drag a node if it's not the start or the target node
       if (!node.isStartNode && !node.isTargetNode) {
         e.preventDefault();
         return;
       }
 
+      setIsMousePressed(false);
+
       e.dataTransfer.clearData();
       e.dataTransfer.dropEffect = "move";
       e.dataTransfer.effectAllowed = "move";
       e.dataTransfer.setData("application/json", JSON.stringify(node));
 
-      setIsMousePressed(false);
       setTimeout(() => setIsDragged(true), 0);
     },
-    [node, setIsMousePressed]
+    [node, setIsMousePressed, isRunning]
   );
 
   const handleDrop = useCallback(
@@ -112,7 +126,7 @@ const NodeItem: FC<NodeItemProps> = ({
 
   return (
     <div
-      draggable={node.isStartNode || node.isTargetNode}
+      draggable={!isRunning && (node.isStartNode || node.isTargetNode)}
       onMouseEnter={(e) => handleMouseEnter(e)}
       onMouseDown={() => setIsMousePressed(true)}
       onMouseUp={() => setIsMousePressed(false)}
@@ -143,7 +157,7 @@ const NodeItem: FC<NodeItemProps> = ({
         node.isWall
           ? "border-black duration-1000 after:scale-100 after:bg-black/60"
           : "",
-        node.isStartNode || node.isTargetNode
+        !isRunning && (node.isStartNode || node.isTargetNode)
           ? "cursor-pointer duration-200"
           : ""
       )}

@@ -7,6 +7,7 @@ interface SelectInputProps {
   setValue: (value: string) => void;
   options: readonly string[];
   className?: string;
+  disabled: boolean;
 }
 
 const Select: FC<SelectInputProps> = ({
@@ -14,6 +15,7 @@ const Select: FC<SelectInputProps> = ({
   value,
   options,
   setValue,
+  disabled,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -29,12 +31,15 @@ const Select: FC<SelectInputProps> = ({
     <button
       onClick={() => setIsOpen(true)}
       onBlur={() => setIsOpen(false)}
+      disabled={disabled}
       className={twMerge(
         `relative z-10 flex items-center justify-center gap-2
           whitespace-nowrap rounded-xl border border-slate-700 bg-slate-800 
           px-3 py-2 text-sm font-semibold leading-none 
           text-slate-400 outline-none transition-all duration-150
-          hover:border-slate-500 hover:bg-slate-700/75 focus:border-slate-500 focus:bg-slate-700/75`,
+          hover:border-slate-500 hover:bg-slate-700/75 focus:border-slate-500 
+          focus:bg-slate-700/75 disabled:border-slate-700 disabled:bg-slate-800
+          disabled:text-slate-500`,
         className
       )}
     >
