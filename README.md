@@ -1,8 +1,7 @@
 # 💫 Pathfinding Visualizer
 
-<p>
-  Visualize the different pathfinding algorithms with this web-based tool!
-</p>
+Visualize the different pathfinding algorithms with this web-based tool!  
+This project was inspired by [Clément Mihailescu](https://github.com/clementmihailescu) and his amazing [Pathfinding-Visualizer](https://github.com/clementmihailescu/Pathfinding-Visualizer) project.
 
 <hr>
 
