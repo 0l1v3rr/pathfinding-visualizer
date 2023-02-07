@@ -16,7 +16,7 @@ export const useBfs = () => {
   const bfs = useCallback((): [Node[], Node | null] => {
     const unvisitedNodes: Node[] = getAllNodes(nodes);
 
-    // access the the start and the target node
+    // access the the start and the target nodes
     const startNode = [...unvisitedNodes]
       .filter((node) => node.isStartNode)
       .at(0)!;
@@ -25,23 +25,31 @@ export const useBfs = () => {
       .at(0)!;
 
     const structure: Node[] = [startNode];
+    const nodesToAnimate: Node[] = [];
+    const exploredNodes: string[] = [];
 
     while (structure.length > 0) {
       const currentNode = structure.shift()!;
       if (currentNode.isWall) continue;
 
-      structure.push(currentNode);
-      if (currentNode === targetNode) return [structure, targetNode];
+      nodesToAnimate.push(currentNode);
 
-      getNeighbours(currentNode, nodes)
-        .filter((node) => !structure.includes(node))
-        .forEach((neighbour) => {
-          neighbour.previousNode = currentNode;
-          structure.push(neighbour);
+      if (currentNode === targetNode) return [nodesToAnimate, targetNode];
+
+      [...getNeighbours(currentNode, nodes)]
+        .filter((node) => !node.isWall)
+        .forEach((neighbor) => {
+          const id = `${neighbor.rowIndex}-${neighbor.colIndex}`;
+
+          if (!exploredNodes.includes(id)) {
+            exploredNodes.push(id);
+            neighbor.previousNode = { ...currentNode };
+            structure.push(neighbor);
+          }
         });
     }
 
-    return [structure, null];
+    return [nodesToAnimate, null];
   }, [nodes]);
 
   // animate the nodes

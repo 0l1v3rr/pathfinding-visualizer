@@ -46,7 +46,7 @@ npm start
 
 ## 🧑‍🤝‍🧑 Contributing
 
-All contributions are welcome.  
+All contributions are welcomed.  
 You can find a contributing guideline [here](CONTRIBUTING.md).  
 This project is released under the [MIT License](LICENSE).
 
