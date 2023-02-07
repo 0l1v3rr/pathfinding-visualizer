@@ -30,6 +30,16 @@ const NodeItem: FC<NodeItemProps> = ({
     );
   }, [node]);
 
+  const handleClick = useCallback(() => {
+    if (isNotRegularNode) return;
+    if (isDragged) return;
+    if (isRunning) return;
+
+    const { isWall } = node;
+
+    updateWallStatus(node, !isWall);
+  }, [isNotRegularNode, isDragged, isRunning, node, updateWallStatus]);
+
   const handleMouseEnter = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       // we only create walls if the mouse is pressed and it's an empty node
@@ -130,6 +140,7 @@ const NodeItem: FC<NodeItemProps> = ({
       onMouseEnter={(e) => handleMouseEnter(e)}
       onMouseDown={() => setIsMousePressed(true)}
       onMouseUp={() => setIsMousePressed(false)}
+      onClick={() => handleClick()}
       onDragStart={(e) => handleDragStart(e)}
       onDragEnd={() => setIsDragged(false)}
       onDrop={(e) => handleDrop(e)}
@@ -137,7 +148,7 @@ const NodeItem: FC<NodeItemProps> = ({
       style={{
         width: `calc(100vi / ${GRAPH_WIDTH})`,
         height: `calc(100vi / ${GRAPH_WIDTH})`,
-        fontSize: isDragged ? "0" : `calc((100vi) / ${GRAPH_WIDTH})`,
+        fontSize: isDragged ? "0" : `calc(100vi / ${GRAPH_WIDTH})`,
         // width: `calc((100vw - 5rem) / ${GRAPH_WIDTH})`,
         // height: `calc((100vw - 5rem) / ${GRAPH_WIDTH})`,
         // fontSize: isDragged ? "0" : `calc((100vw - 5rem) / ${GRAPH_WIDTH})`,
