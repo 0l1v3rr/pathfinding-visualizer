@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import Button from "../button/Button";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { IconType } from "react-icons";
+import Key from "../input/Key";
 
 interface PaginationButtonProps {
   disabled: boolean;
@@ -18,7 +19,39 @@ interface PopupPage {
 const pages: PopupPage[] = [
   {
     header: "Welcome!",
-    content: <div>Welcome to my Pathfinding Visualization project!</div>,
+    content: (
+      <div className="flex flex-col gap-1">
+        <span className="text-lg font-semibold leading-tight">
+          • Welcome to my Pathfinding Visualization project!
+        </span>
+
+        <span>
+          The project was inspired by{" "}
+          <a
+            href="https://clementmihailescu.github.io/Pathfinding-Visualizer/#"
+            target="_blank"
+            rel="noreferrer"
+            className="cursor-pointer text-sky-400 hover:underline"
+          >
+            this
+          </a>{" "}
+          amazing project. Check it out as well.
+        </span>
+
+        <span>
+          The source code can be found{" "}
+          <a
+            href="https://github.com/0l1v3rr/pathfinding-visualizer"
+            target="_blank"
+            rel="noreferrer"
+            className="cursor-pointer text-sky-400 hover:underline"
+          >
+            here
+          </a>
+          .
+        </span>
+      </div>
+    ),
   },
   {
     header: "What is a Pathfinding Algorithm?",
@@ -27,6 +60,50 @@ const pages: PopupPage[] = [
         A pathfinding algorithm tries to find the shortest path between two
         points. This application visualizes several pathfinding algorithms in
         action!
+      </div>
+    ),
+  },
+  {
+    header: "Picking an Algorithm",
+    content: (
+      <div>
+        Choose between the different algorithms from the drop-down list in the
+        header.
+      </div>
+    ),
+  },
+  {
+    header: "Adding walls",
+    content: (
+      <div className="flex flex-col gap-2">
+        <span className="text-lg font-semibold leading-none">
+          • Hold down the left mouse button and move the mouse around the grid
+          to add or remove walls.
+        </span>
+        <span>
+          Press the <Key label="Shift" /> key to add walls only.
+        </span>
+        <span>
+          Press the <Key label="Control" /> key to remove walls only.
+        </span>
+      </div>
+    ),
+  },
+  {
+    header: "Dragging the nodes",
+    content: (
+      <div>
+        You can grab the start and target nodes and drag them around the grid
+        freely.
+      </div>
+    ),
+  },
+  {
+    header: "Visualizing the algorithm",
+    content: (
+      <div>
+        Click on the Visualize! button in the navbar to start the visualization
+        and animation process.
       </div>
     ),
   },
@@ -58,17 +135,18 @@ const PopupContainer = () => {
         className={twMerge(
           "fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 shadow-md",
           "border border-slate-200/10 bg-slate-900 transition-all duration-200",
-          "flex flex-col gap-4 rounded-lg px-4 py-2",
+          "flex select-none flex-col gap-4 rounded-lg px-4 py-2",
+          "w-[90%] sm:w-[85%] md:w-[70%] lg:w-[50%]",
           isOpen
             ? "pointer-events-auto scale-100 opacity-100"
             : "pointer-events-none scale-50 opacity-0"
         )}
       >
-        <div className="text-center text-lg font-semibold uppercase text-slate-200">
+        <div className="text-center text-xl font-semibold uppercase text-slate-200">
           {pages[page - 1].header}
         </div>
 
-        <div className="text-slate-300">{pages[page - 1].content}</div>
+        <div className="italic text-slate-300">{pages[page - 1].content}</div>
 
         <div className="flex items-stretch justify-between gap-6 text-sm">
           <div>
@@ -101,10 +179,10 @@ const PopupContainer = () => {
       </div>
 
       <div
-        className={`fixed top-0 left-0 z-40 h-screen w-screen transition-all 
-        duration-150 ${
+        className={twMerge(
+          "fixed top-0 left-0 z-40 h-screen w-screen transition-all duration-150",
           isOpen ? "bg-black/20 backdrop-blur-sm" : "pointer-events-none"
-        }`}
+        )}
       />
     </>
   );
