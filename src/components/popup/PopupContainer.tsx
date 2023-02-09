@@ -4,6 +4,7 @@ import Button from "../button/Button";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { IconType } from "react-icons";
 import Key from "../input/Key";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 interface PaginationButtonProps {
   disabled: boolean;
@@ -126,7 +127,8 @@ const PaginationButton: FC<PaginationButtonProps> = (props) => {
 };
 
 const PopupContainer = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [shouldOpen, setShouldOpen] = useLocalStorage("isPopupOpen", true);
+  const [isOpen, setIsOpen] = useState<boolean>(() => shouldOpen);
   const [page, setPage] = useState<number>(1);
 
   return (
@@ -152,8 +154,13 @@ const PopupContainer = () => {
           <div>
             <Button
               disabled={false}
-              label="Skip Tutorial"
-              onClick={() => setIsOpen(false)}
+              label={
+                page === pages.length ? "Finish Tutorial" : "Skip Tutorial"
+              }
+              onClick={() => {
+                setIsOpen(false);
+                setShouldOpen(false);
+              }}
             />
           </div>
 
