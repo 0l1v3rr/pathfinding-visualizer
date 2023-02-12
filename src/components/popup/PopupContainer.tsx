@@ -103,8 +103,17 @@ const pages: PopupPage[] = [
     header: "Visualizing the algorithm",
     content: (
       <div>
-        Click on the Visualize! button in the navbar to start the visualization
-        and animation process.
+        Click on the <Key label="Visualize!" /> button in the navbar to start
+        the visualization and animation process.
+      </div>
+    ),
+  },
+  {
+    header: "Resetting the grid",
+    content: (
+      <div>
+        After the visualization has stopped running, you need to clear the grid
+        by using the <Key label="Reset Board" /> button.
       </div>
     ),
   },
