@@ -76,7 +76,7 @@ const NodeItem: FC<NodeItemProps> = ({
 
   const handleDragStart = useCallback(
     (e: React.DragEvent) => {
-      if (isRunning) {
+      if (isRunning || node.isShortestPath) {
         e.preventDefault();
         return;
       }
@@ -136,7 +136,10 @@ const NodeItem: FC<NodeItemProps> = ({
 
   return (
     <div
-      draggable={!isRunning && (node.isStartNode || node.isTargetNode)}
+      draggable={
+        (!node.isShortestPath || !isRunning) &&
+        (node.isStartNode || node.isTargetNode)
+      }
       onMouseEnter={(e) => handleMouseEnter(e)}
       onMouseDown={() => setIsMousePressed(true)}
       onMouseUp={() => setIsMousePressed(false)}
@@ -168,8 +171,10 @@ const NodeItem: FC<NodeItemProps> = ({
         node.isWall
           ? "border-black duration-1000 after:scale-100 after:bg-black/60"
           : "",
-        !isRunning && (node.isStartNode || node.isTargetNode)
-          ? "cursor-pointer duration-200"
+        node.isStartNode || node.isTargetNode
+          ? node.isShortestPath || isRunning
+            ? "cursor-not-allowed"
+            : "cursor-pointer duration-200"
           : ""
       )}
     >
