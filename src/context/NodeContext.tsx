@@ -40,7 +40,12 @@ export const NodeProvider: FC<NodeProviderProps> = ({ children }) => {
   const clearWalls = useCallback(() => {
     setNodes((prev) => {
       return [...prev].map((row) =>
-        row.map((node) => ({ ...node, isWall: false }))
+        row.map((node) => ({
+          ...node,
+          isWall: false,
+          isVisited: false,
+          isShortestPath: false,
+        }))
       );
     });
   }, []);
