@@ -1,9 +1,9 @@
-import { DragEvent, FC, MouseEvent, useContext, useState } from "react";
+import { DragEvent, FC, MouseEvent, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { GRAPH_WIDTH, Node } from "../../types/node";
 import { GoChevronRight } from "react-icons/go";
 import { BiTargetLock } from "react-icons/bi";
-import { NodeContext, NodeContextType } from "../../context/NodeContext";
+import { useNodeContext } from "../../context/NodeContext";
 
 interface NodeItemProps {
   node: Node;
@@ -16,9 +16,7 @@ const NodeItem: FC<NodeItemProps> = ({
   setIsMousePressed,
   isMousePressed,
 }) => {
-  const { updateNode, updateWallStatus, isRunning } = useContext(
-    NodeContext
-  ) as NodeContextType;
+  const { updateNode, updateWallStatus, isRunning } = useNodeContext();
 
   const [isDragged, setIsDragged] = useState(false);
   const [draggedOver, setDraggedOver] = useState(false);

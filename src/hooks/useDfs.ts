@@ -1,5 +1,5 @@
-import { useCallback, useContext } from "react";
-import { NodeContext, NodeContextType } from "../context/NodeContext";
+import { useCallback } from "react";
+import { useNodeContext } from "../context/NodeContext";
 import { Node } from "../types/node";
 import {
   getAllNodes,
@@ -10,7 +10,7 @@ import { sleep } from "../utils/sleep";
 
 export const useDfs = () => {
   const { nodes, markNodeAsVisited, markNodeAsShortestPath, setIsRunning } =
-    useContext(NodeContext) as NodeContextType;
+    useNodeContext();
 
   const bfs = useCallback((): [Node[], Node | null] => {
     const unvisitedNodes: Node[] = getAllNodes(nodes);

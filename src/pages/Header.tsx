@@ -1,10 +1,9 @@
 import Button from "../components/button/Button";
 import HeaderButton from "../components/button/HeaderButton";
 import { BsGithub } from "react-icons/bs";
-import { useContext } from "react";
 import Select from "../components/input/Select";
 import { algorithms } from "../const/algorithms";
-import { NodeContext, NodeContextType } from "../context/NodeContext";
+import { useNodeContext } from "../context/NodeContext";
 import { useVisualize } from "../hooks/useVisualize";
 
 const Header = () => {
@@ -14,7 +13,7 @@ const Header = () => {
     clearWalls,
     resetBoard,
     isRunning,
-  } = useContext(NodeContext) as NodeContextType;
+  } = useNodeContext();
   const visualizeAlgorithm = useVisualize(selectedAlgorithm);
 
   return (

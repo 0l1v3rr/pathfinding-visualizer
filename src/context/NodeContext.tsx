@@ -5,6 +5,7 @@ import {
   ReactElement,
   SetStateAction,
   useCallback,
+  useContext,
   useState,
 } from "react";
 import { algorithms } from "../const/algorithms";
@@ -29,6 +30,15 @@ export interface NodeContextType {
 }
 
 export const NodeContext = createContext<NodeContextType | null>(null);
+
+export function useNodeContext(): NodeContextType {
+  const context = useContext(NodeContext);
+  if (!context) {
+    throw new Error("useNodeContext can only be used inside the NodeProvider");
+  }
+
+  return context;
+}
 
 export const NodeProvider: FC<NodeProviderProps> = ({ children }) => {
   const [isRunning, setIsRunning] = useState<boolean>(false);

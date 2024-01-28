@@ -1,9 +1,9 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import NodeItem from "./Node";
-import { NodeContext, NodeContextType } from "../../context/NodeContext";
+import { useNodeContext } from "../../context/NodeContext";
 
 const NodeContainer = () => {
-  const { nodes } = useContext(NodeContext) as NodeContextType;
+  const { nodes } = useNodeContext();
   const [isMousePressed, setIsMousePressed] = useState<boolean>(false);
 
   return (
