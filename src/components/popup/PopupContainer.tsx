@@ -36,7 +36,7 @@ const pages: PopupPage[] = [
           >
             this
           </a>{" "}
-          amazing project. Check it out as well.
+          project. Check it out as well.
         </span>
 
         <span>
@@ -125,10 +125,7 @@ const PaginationButton: FC<PaginationButtonProps> = (props) => {
       disabled={props.disabled}
       onClick={props.onClick}
       type="button"
-      className="rounded-md border border-slate-700 bg-slate-800 px-2
-        text-sm leading-none text-slate-200 outline-none transition-all 
-        duration-300 hover:border-slate-600 hover:bg-slate-700 hover:text-white
-        disabled:border-slate-700 disabled:bg-slate-800 disabled:text-slate-500"
+      className="rounded-md border border-slate-700 bg-slate-800 px-2 text-sm leading-none text-slate-200 outline-none transition-all duration-300 hover:border-slate-600 hover:bg-slate-700 hover:text-white disabled:border-slate-700 disabled:bg-slate-800 disabled:text-slate-500"
     >
       <props.icon />
     </button>
@@ -163,14 +160,13 @@ const PopupContainer = () => {
           <div>
             <Button
               disabled={false}
-              label={
-                page === pages.length ? "Finish Tutorial" : "Skip Tutorial"
-              }
               onClick={() => {
                 setIsOpen(false);
                 setShouldOpen(false);
               }}
-            />
+            >
+              {page === pages.length ? "Finish Tutorial" : "Skip Tutorial"}
+            </Button>
           </div>
 
           <div className="flex select-none items-center  text-slate-400">

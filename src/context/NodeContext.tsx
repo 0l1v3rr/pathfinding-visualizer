@@ -1,4 +1,12 @@
-import { createContext, FC, ReactElement, useCallback, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  FC,
+  ReactElement,
+  SetStateAction,
+  useCallback,
+  useState,
+} from "react";
 import { algorithms } from "../const/algorithms";
 import { generateEmptyGraph, Node } from "../types/node";
 
@@ -15,9 +23,9 @@ export interface NodeContextType {
   clearWalls: () => void;
   resetBoard: () => void;
   selectedAlgorithm: string;
-  setSelectedAlgorithm: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedAlgorithm: Dispatch<SetStateAction<string>>;
   isRunning: boolean;
-  setIsRunning: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsRunning: Dispatch<SetStateAction<boolean>>;
 }
 
 export const NodeContext = createContext<NodeContextType | null>(null);

@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useContext, useMemo, useState } from "react";
+import { DragEvent, FC, MouseEvent, useContext, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { GRAPH_WIDTH, Node } from "../../types/node";
 import { GoChevronRight } from "react-icons/go";
@@ -20,17 +20,15 @@ const NodeItem: FC<NodeItemProps> = ({
     NodeContext
   ) as NodeContextType;
 
-  const [isDragged, setIsDragged] = useState<boolean>(false);
-  const isNotRegularNode = useMemo(() => {
-    return (
-      node.isShortestPath ||
-      node.isStartNode ||
-      node.isTargetNode ||
-      node.isVisited
-    );
-  }, [node]);
+  const [isDragged, setIsDragged] = useState(false);
+  const [draggedOver, setDraggedOver] = useState(false);
+  const isNotRegularNode =
+    node.isShortestPath ||
+    node.isStartNode ||
+    node.isTargetNode ||
+    node.isVisited;
 
-  const handleClick = useCallback(() => {
+  const handleClick = () => {
     if (isNotRegularNode) return;
     if (isDragged) return;
     if (isRunning) return;
@@ -38,101 +36,84 @@ const NodeItem: FC<NodeItemProps> = ({
     const { isWall } = node;
 
     updateWallStatus(node, !isWall);
-  }, [isNotRegularNode, isDragged, isRunning, node, updateWallStatus]);
+  };
 
-  const handleMouseEnter = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      // we only create walls if the mouse is pressed and it's an empty node
-      if (!isMousePressed) return;
-      if (isNotRegularNode) return;
-      if (isDragged) return;
-      if (isRunning) return;
+  const handleMouseEnter = (e: MouseEvent<HTMLDivElement>) => {
+    // we only create walls if the mouse is pressed and it's an empty node
+    if (!isMousePressed) return;
+    if (isNotRegularNode) return;
+    if (isDragged) return;
+    if (isRunning) return;
 
-      const { isWall } = node;
+    const { isWall } = node;
 
-      // if the control is pressed, we only REMOVE walls
-      if (e.ctrlKey && !isWall) {
-        updateWallStatus(node, false);
-        return;
-      }
+    // if the control is pressed, we only REMOVE walls
+    if (e.ctrlKey && !isWall) {
+      updateWallStatus(node, false);
+      return;
+    }
 
-      // if the shift is pressed, we only CREATE walls
-      if (e.shiftKey && isWall) {
-        updateWallStatus(node, true);
-        return;
-      }
+    // if the shift is pressed, we only CREATE walls
+    if (e.shiftKey && isWall) {
+      updateWallStatus(node, true);
+      return;
+    }
 
-      updateWallStatus(node, !isWall);
-    },
-    [
-      isMousePressed,
-      updateWallStatus,
-      node,
-      isNotRegularNode,
-      isDragged,
-      isRunning,
-    ]
-  );
+    updateWallStatus(node, !isWall);
+  };
 
-  const handleDragStart = useCallback(
-    (e: React.DragEvent) => {
-      if (isRunning || node.isShortestPath) {
-        e.preventDefault();
-        return;
-      }
-
-      // we cannot drag a node if it's not the start or the target node
-      if (!node.isStartNode && !node.isTargetNode) {
-        e.preventDefault();
-        return;
-      }
-
-      setIsMousePressed(false);
-
-      e.dataTransfer.clearData();
-      e.dataTransfer.dropEffect = "move";
-      e.dataTransfer.effectAllowed = "move";
-      e.dataTransfer.setData("application/json", JSON.stringify(node));
-
-      setTimeout(() => setIsDragged(true), 0);
-    },
-    [node, setIsMousePressed, isRunning]
-  );
-
-  const handleDrop = useCallback(
-    (e: React.DragEvent) => {
-      const data: Node = JSON.parse(e.dataTransfer.getData("application/json"));
-      const { isStartNode, isTargetNode } = data;
-
-      updateNode(node.rowIndex, node.colIndex, {
-        ...node,
-        isStartNode,
-        isTargetNode,
-        distance: isStartNode ? 0 : Infinity,
-      });
-
-      updateNode(data.rowIndex, data.colIndex, {
-        ...data,
-        isStartNode: false,
-        isTargetNode: false,
-        distance: Infinity,
-      });
-
-      setIsDragged(false);
-      setIsMousePressed(false);
-      e.dataTransfer.clearData();
-    },
-    [node, updateNode, setIsMousePressed]
-  );
-
-  const handleDragOver = useCallback(
-    (e: React.DragEvent) => {
-      if (node.isWall || node.isStartNode || node.isTargetNode) return;
-
+  const handleDragStart = (e: DragEvent) => {
+    if (isRunning || node.isShortestPath) {
       e.preventDefault();
-    },
-    [node.isStartNode, node.isTargetNode, node.isWall]
-  );
+      return;
+    }
+
+    // we cannot drag a node if it's not the start or the target node
+    if (!node.isStartNode && !node.isTargetNode) {
+      e.preventDefault();
+      return;
+    }
+
+    setIsMousePressed(false);
+
+    e.dataTransfer.clearData();
+    e.dataTransfer.dropEffect = "move";
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("application/json", JSON.stringify(node));
+
+    setTimeout(() => setIsDragged(true), 0);
+  };
+
+  const handleDrop = (e: DragEvent) => {
+    const data: Node = JSON.parse(e.dataTransfer.getData("application/json"));
+    const { isStartNode, isTargetNode } = data;
+
+    updateNode(node.rowIndex, node.colIndex, {
+      ...node,
+      isStartNode,
+      isTargetNode,
+      distance: isStartNode ? 0 : Infinity,
+    });
+
+    updateNode(data.rowIndex, data.colIndex, {
+      ...data,
+      isStartNode: false,
+      isTargetNode: false,
+      distance: Infinity,
+    });
+
+    setIsDragged(false);
+    setIsMousePressed(false);
+    setDraggedOver(false);
+    e.dataTransfer.clearData();
+  };
+
+  const handleDragOver = (e: DragEvent) => {
+    if (node.isWall || node.isStartNode || node.isTargetNode) return;
+
+    e.preventDefault();
+    setDraggedOver(true);
+  };
 
   return (
     <div
@@ -140,21 +121,19 @@ const NodeItem: FC<NodeItemProps> = ({
         (!node.isShortestPath || !isRunning) &&
         (node.isStartNode || node.isTargetNode)
       }
-      onMouseEnter={(e) => handleMouseEnter(e)}
       onMouseDown={() => setIsMousePressed(true)}
       onMouseUp={() => setIsMousePressed(false)}
-      onClick={() => handleClick()}
-      onDragStart={(e) => handleDragStart(e)}
       onDragEnd={() => setIsDragged(false)}
-      onDrop={(e) => handleDrop(e)}
-      onDragOver={(e) => handleDragOver(e)}
+      onMouseEnter={handleMouseEnter}
+      onClick={handleClick}
+      onDragStart={handleDragStart}
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+      onDragLeave={() => setDraggedOver(false)}
       style={{
         width: `calc(100vi / ${GRAPH_WIDTH})`,
         height: `calc(100vi / ${GRAPH_WIDTH})`,
         fontSize: isDragged ? "0" : `calc(100vi / ${GRAPH_WIDTH})`,
-        // width: `calc((100vw - 5rem) / ${GRAPH_WIDTH})`,
-        // height: `calc((100vw - 5rem) / ${GRAPH_WIDTH})`,
-        // fontSize: isDragged ? "0" : `calc((100vw - 5rem) / ${GRAPH_WIDTH})`,
       }}
       className={twMerge(
         "border border-slate-300/10 bg-slate-900/50 text-slate-200",
@@ -162,6 +141,7 @@ const NodeItem: FC<NodeItemProps> = ({
         "after:absolute after:inset-0 after:h-full after:w-full after:content-['']",
         "overflow-hidden after:scale-50 after:hue-rotate-90",
         "after:transition-[transform,filter] after:duration-300",
+        draggedOver ? "bg-white/5" : "",
         node.isVisited
           ? "border-sky-600 bg-red-400 duration-1000 after:scale-100 after:bg-sky-500 after:hue-rotate-0"
           : "",

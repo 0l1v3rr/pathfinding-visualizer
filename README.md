@@ -1,11 +1,10 @@
-# 💫 Pathfinding Visualizer
+# Pathfinding Visualizer
 
-Visualize the different pathfinding algorithms with this web-based tool!  
-This project was inspired by [Clément Mihailescu](https://github.com/clementmihailescu) and his amazing [Pathfinding-Visualizer](https://github.com/clementmihailescu/Pathfinding-Visualizer) project.
+Visualize the different pathfinding algorithms with this web-based tool!
 
 <hr>
 
-## ⚡ Quick Start
+## Quick Start
 
 The easiest way to get started is to visit the demo website, where you can play around with this visualization tool.  
 [https://0l1v3rr.github.io/pathfinding-visualizer](https://0l1v3rr.github.io/pathfinding-visualizer)
@@ -14,7 +13,7 @@ The easiest way to get started is to visit the demo website, where you can play 
 
 <hr>
 
-## 📈 Algorithms
+## Algorithms
 
 The following algorithms are currently supported by the application:
 
@@ -25,7 +24,7 @@ The following algorithms are currently supported by the application:
 
 <hr>
 
-## ⚒️ Building from source
+## Building from source
 
 If you don't have NodeJS, [download and install it](https://nodejs.org/en/).  
 Then open a terminal and type the following commands:
@@ -44,8 +43,12 @@ npm start
 
 <hr>
 
-## 🧑‍🤝‍🧑 Contributing
+## Contributing
 
 All contributions are welcomed.  
 You can find a contributing guideline [here](CONTRIBUTING.md).  
 This project is released under the [MIT License](LICENSE).
+
+## Inspiration
+
+This project was inspired by [Clément Mihailescu](https://github.com/clementmihailescu).

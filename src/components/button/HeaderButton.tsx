@@ -1,31 +1,24 @@
-import { FC } from "react";
+import { ButtonHTMLAttributes, FC } from "react";
 import { twMerge } from "tailwind-merge";
 
-interface HeaderButtonProps {
-  label: string;
-  className?: string;
-  disabled: boolean;
-  onClick: () => void;
-}
+interface HeaderButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
 const HeaderButton: FC<HeaderButtonProps> = ({
-  label,
+  children,
   className,
-  onClick,
-  disabled,
+  ...rest
 }) => {
   return (
     <button
-      disabled={disabled}
       className={twMerge(
         "font-semibold leading-none text-slate-200 transition-all duration-150",
         "outline-none hover:text-sky-400 focus:text-sky-400",
         "disabled:text-slate-400",
         className
       )}
-      onClick={onClick}
+      {...rest}
     >
-      {label}
+      {children}
     </button>
   );
 };

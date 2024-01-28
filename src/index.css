@@ -36,7 +36,6 @@
   }
 
   *::-webkit-scrollbar-thumb {
-    @apply rounded-md border-[3px] border-solid border-transparent 
-      bg-zinc-200/[.15] bg-clip-content transition-all;
+    @apply rounded-md border-[3px] border-solid border-transparent bg-zinc-200/[.15] bg-clip-content transition-all;
   }
 }
