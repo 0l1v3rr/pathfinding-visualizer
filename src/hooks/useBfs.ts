@@ -9,8 +9,13 @@ import {
 import { sleep } from "../utils/sleep";
 
 export const useBfs = () => {
-  const { nodes, markNodeAsVisited, markNodeAsShortestPath, setIsRunning } =
-    useNodeContext();
+  const {
+    nodes,
+    markNodeAsVisited,
+    markNodeAsShortestPath,
+    setIsRunning,
+    setIsRan,
+  } = useNodeContext();
 
   const bfs = useCallback((): [Node[], Node | null] => {
     const unvisitedNodes: Node[] = getAllNodes(nodes);
@@ -53,6 +58,7 @@ export const useBfs = () => {
 
   // animate the nodes
   return async () => {
+    setIsRan(false);
     setIsRunning(true);
     const [nodesInOrder, finishNode] = bfs();
 
@@ -69,5 +75,6 @@ export const useBfs = () => {
     }
 
     setIsRunning(false);
+    setIsRan(true);
   };
 };

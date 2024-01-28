@@ -16,7 +16,7 @@ const NodeItem: FC<NodeItemProps> = ({
   setIsMousePressed,
   isMousePressed,
 }) => {
-  const { updateNode, updateWallStatus, isRunning } = useNodeContext();
+  const { updateNode, updateWallStatus, isRunning, isRan } = useNodeContext();
 
   const [isDragged, setIsDragged] = useState(false);
   const [draggedOver, setDraggedOver] = useState(false);
@@ -30,6 +30,7 @@ const NodeItem: FC<NodeItemProps> = ({
     if (isNotRegularNode) return;
     if (isDragged) return;
     if (isRunning) return;
+    if (isRan) return;
 
     const { isWall } = node;
 
@@ -42,6 +43,7 @@ const NodeItem: FC<NodeItemProps> = ({
     if (isNotRegularNode) return;
     if (isDragged) return;
     if (isRunning) return;
+    if (isRan) return;
 
     const { isWall } = node;
 

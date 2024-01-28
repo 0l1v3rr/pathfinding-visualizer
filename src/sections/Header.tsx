@@ -13,6 +13,7 @@ const Header = () => {
     clearWalls,
     resetBoard,
     isRunning,
+    isRan,
   } = useNodeContext();
   const visualizeAlgorithm = useVisualize(selectedAlgorithm);
 
@@ -30,7 +31,11 @@ const Header = () => {
         disabled={isRunning}
       />
 
-      <HeaderButton onClick={() => resetBoard()} disabled={isRunning}>
+      <HeaderButton
+        onClick={() => resetBoard()}
+        disabled={isRunning}
+        className={isRan ? "animate-pulse text-cyan-400" : ""}
+      >
         Reset Board
       </HeaderButton>
       <HeaderButton
@@ -38,7 +43,7 @@ const Header = () => {
         className="hidden sm:block"
         disabled={isRunning}
       >
-        Clear Walls
+        Clear Nodes
       </HeaderButton>
       <Button onClick={() => visualizeAlgorithm()} disabled={isRunning}>
         Visualize!

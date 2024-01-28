@@ -27,6 +27,8 @@ export interface NodeContextType {
   setSelectedAlgorithm: Dispatch<SetStateAction<string>>;
   isRunning: boolean;
   setIsRunning: Dispatch<SetStateAction<boolean>>;
+  isRan: boolean;
+  setIsRan: Dispatch<SetStateAction<boolean>>;
 }
 
 export const NodeContext = createContext<NodeContextType | null>(null);
@@ -41,8 +43,11 @@ export function useNodeContext(): NodeContextType {
 }
 
 export const NodeProvider: FC<NodeProviderProps> = ({ children }) => {
-  const [isRunning, setIsRunning] = useState<boolean>(false);
-  const [nodes, setNodes] = useState<Array<Array<Node>>>(generateEmptyGraph());
+  const [isRunning, setIsRunning] = useState(false);
+  const [isRan, setIsRan] = useState(false);
+  const [nodes, setNodes] = useState<Array<Array<Node>>>(
+    structuredClone(generateEmptyGraph())
+  );
   const [selectedAlgorithm, setSelectedAlgorithm] = useState<string>(
     algorithms[0]
   );
@@ -55,9 +60,10 @@ export const NodeProvider: FC<NodeProviderProps> = ({ children }) => {
     });
   }, []);
 
-  const clearWalls = useCallback(() => {
+  const clearWalls = () => {
+    setIsRan(false);
     setNodes((prev) => {
-      return [...prev].map((row) =>
+      return prev.map((row) =>
         row.map((node) => ({
           ...node,
           isWall: false,
@@ -66,7 +72,7 @@ export const NodeProvider: FC<NodeProviderProps> = ({ children }) => {
         }))
       );
     });
-  }, []);
+  };
 
   const markNodeAsVisited = useCallback(
     (node: Node) =>
@@ -84,13 +90,13 @@ export const NodeProvider: FC<NodeProviderProps> = ({ children }) => {
     [updateNode]
   );
 
-  const updateWallStatus = useCallback(
-    (node: Node, isWall: boolean) =>
-      updateNode(node.rowIndex, node.colIndex, { ...node, isWall }),
-    [updateNode]
-  );
+  const updateWallStatus = (node: Node, isWall: boolean) =>
+    updateNode(node.rowIndex, node.colIndex, { ...node, isWall });
 
-  const resetBoard = useCallback(() => setNodes(generateEmptyGraph()), []);
+  const resetBoard = () => {
+    setNodes(structuredClone(generateEmptyGraph()));
+    setIsRan(false);
+  };
 
   return (
     <NodeContext.Provider
@@ -100,6 +106,8 @@ export const NodeProvider: FC<NodeProviderProps> = ({ children }) => {
         setSelectedAlgorithm,
         isRunning,
         setIsRunning,
+        isRan,
+        setIsRan,
         updateNode,
         updateWallStatus,
         clearWalls,

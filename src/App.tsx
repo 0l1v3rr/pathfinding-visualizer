@@ -1,6 +1,6 @@
 import Main from "./components/layout/Main";
-import Header from "./pages/Header";
-import Guide from "./pages/Guide";
+import Header from "./sections/Header";
+import Guide from "./sections/Guide";
 import NodeContainer from "./components/pathfinding/NodeContainer";
 import PopupContainer from "./components/popup/PopupContainer";
 
