@@ -45,7 +45,10 @@ const Header = () => {
       >
         Clear Nodes
       </HeaderButton>
-      <Button onClick={() => visualizeAlgorithm()} disabled={isRunning}>
+      <Button
+        onClick={() => visualizeAlgorithm()}
+        disabled={isRunning || isRan}
+      >
         Visualize!
       </Button>
 

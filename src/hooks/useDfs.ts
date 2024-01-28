@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { useNodeContext } from "../context/NodeContext";
 import { Node } from "../types/node";
 import {
@@ -17,7 +16,7 @@ export const useDfs = () => {
     setIsRan,
   } = useNodeContext();
 
-  const bfs = useCallback((): [Node[], Node | null] => {
+  const bfs = (): [Node[], Node | null] => {
     const unvisitedNodes: Node[] = getAllNodes(nodes);
 
     // access the the start and the target nodes
@@ -55,9 +54,8 @@ export const useDfs = () => {
     }
 
     return [nodesToAnimate, null];
-  }, [nodes]);
+  };
 
-  // animate the nodes
   return async () => {
     setIsRan(false);
     setIsRunning(true);

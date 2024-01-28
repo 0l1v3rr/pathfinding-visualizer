@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { useNodeContext } from "../context/NodeContext";
 import { Node } from "../types/node";
 import {
@@ -17,7 +16,7 @@ export const useDijkstras = () => {
     setIsRan,
   } = useNodeContext();
 
-  const dijkstra = useCallback((): [Node[], Node | null] => {
+  const dijkstra = (): [Node[], Node | null] => {
     const unvisitedNodes: Node[] = getAllNodes(nodes);
     const visitedNodes: Node[] = [];
 
@@ -46,9 +45,8 @@ export const useDijkstras = () => {
     }
 
     return [visitedNodes, null];
-  }, [nodes]);
+  };
 
-  // animate the nodes
   return async () => {
     setIsRan(false);
     setIsRunning(true);
